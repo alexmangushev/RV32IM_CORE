@@ -1,0 +1,24 @@
+:doctype: book
+:toc:
+:toclevels: 5
+:toc-title: Оглавление
+:numbered:
+:sectnumlevels: 5
+
+:sectids:
+:idprefix: user-content-
+:idseparator: -
+:chapter-signifier: Глава
+
+== Состояние проекта
+
+include::./doc/project_state.adoc[leveloffset=+2]
+
+
+== Подготовка среды
+
+include::./doc/prepare_env.adoc[leveloffset=+2]
+
+== Запуск ядра
+
+== Устройство проекта

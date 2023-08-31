@@ -10,6 +10,12 @@
 :idseparator: -
 :chapter-signifier: Глава
 
+== Источники
+
+https://github.com/MPSU/SoCDesignChallenge2023-RTL/tree/main
+
+https://ughe.github.io/2018/11/13/gtkwave-automation
+
 == Состояние проекта
 
 include::./doc/project_state.adoc[leveloffset=+2]

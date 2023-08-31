@@ -1,2 +1,4 @@
 sim/*.out
 sim/*.vcd
+program/*.log
+program/*.v

@@ -15,12 +15,13 @@ src = $(shell find "$(prj_path)/rtl")
 # get list of testbench files
 tb = $(shell find "$(prj_path)/testbench")
 
-sim: clear
-	echo $(src)
+sim: clean
+# call make from another dir for compile program
+	make -C $(prj_path)/program
 	iverilog -g2005-sv -s $(top_module) -o $(icarus_res_file) -i $(inc)  $(src) $(tb)
 	vvp $(icarus_res_file) $(wave_file)
 	gtkwave -S scrypt.tcl $(wave_file)
 
-clear: 
+clean: 
 	rm -rf $(icarus_res_file)
 	rm -rf $(wave_file)

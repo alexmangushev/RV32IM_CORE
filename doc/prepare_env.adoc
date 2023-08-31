@@ -1,1 +1,86 @@
 Проект расчитан под работу в системе Linux (Ubuntu).
+Для начала работы следует установить *cross-compile risc-v*, *proxy kernel* для симулятора spike и сам *симулятор Spike*.
+
+**Актуальные инструкции в соответствующих репозиториях!**
+
+== Установка riscv-gnu-toolchain (RV cross-compile)
+
+Создаем папку и клонируем репозиторий:
+[source,bash]
+----
+mkdir RISCV
+
+cd RISCV
+
+git clone https://github.com/riscv/riscv-gnu-toolchain
+----
+
+Добавляем в ~/.bashrc:
+[source]
+----
+export RISCV=/home/<user_name>/RISCV
+export PATH=$PATH:$RISCV/bin
+----
+
+Собираем cross-compile с требуемыми параметрами
+[source,bash]
+----
+cd riscv-gnu-toolchain/
+
+mkdir build
+
+cd build
+
+sudo apt-get update
+
+sudo apt-get upgrade
+
+# По необходимости доустанавливаем пакеты
+sudo apt-get install autoconf automake autotools-dev curl python3 python3-pip libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev ninja-build git cmake libglib2.0-dev
+
+../configure --prefix=$RISCV --with-arch=rv32im_zifencei_zicsr --with-sim=spike
+
+make
+----
+
+
+== Установка proxy kernel для SPIKE
+
+[source,bash]
+----
+cd RISCV/
+
+git clone https://github.com/riscv-software-src/riscv-pk
+
+cd riscv-pk/
+
+sudo apt install device-tree-compiler
+
+mkdir build
+
+cd build/
+
+../configure --prefix=$RISCV --host=riscv32-unknown-elf --with-arch=rv32im_zifencei_zicsr
+
+make
+
+make install
+----
+
+== Установка симулятора SPIKE
+[source,bash]
+----
+git clone https://github.com/riscv-software-src/riscv-isa-sim
+
+cd riscv-isa-sim/
+
+mkdir build
+
+cd build/
+
+../configure --prefix=$RISCV
+
+make
+
+sudo make install
+----

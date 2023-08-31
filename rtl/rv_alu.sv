@@ -1,3 +1,12 @@
+/***********************************************************************************
+ * Copyright (C) 2023 National Research University of Electronic Technology (MIET),
+ * Institute of Microdevices and Control Systems.
+ * See LICENSE file for licensing details.
+ *
+ * This file is a part of miriscv core.
+ *
+ ***********************************************************************************/
+
 module rv_alu
 	import rv_pkg::*;
 	import rv_alu_pkg::*;

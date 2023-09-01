@@ -2,7 +2,7 @@
 prj_path = $(shell cd ..; pwd)
 
 # set name of top module
-top_module = rv_alu_testbench
+top_module = rv_top_testbench
 
 # output files for icarus and gtkwave
 icarus_res_file = sim.out

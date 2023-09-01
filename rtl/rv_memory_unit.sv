@@ -3,19 +3,19 @@ module rv_memory_unit
 (
 	// Clock, reset
   	input  	logic            	clk_i,
-  	input  	logic            	arstn_i,
+	input  	logic            	arstn_i,
 
 	// instruction
-    output  logic [ILEN-1:0]    instr_rdata_o,
-    output  logic               instr_ready_o,
-    input   logic [XLEN-1:0]    instr_addr_i,
+	output  logic [ILEN-1:0]	instr_rdata_o,
+	output  logic           	instr_ready_o,
+	input   logic [XLEN-1:0]	instr_addr_i,
 	input	logic				instr_valid_i,
 
-    // data
-    output  logic [XLEN-1:0]    data_rdata_o,
-    output  logic               data_ready_o,
-    input   logic [XLEN-1:0]    data_addr_i,
-    input   logic [XLEN-1:0]	data_wdata_i,
+	// data
+	output  logic [XLEN-1:0]	data_rdata_o,
+	output  logic           	data_ready_o,
+	input   logic [XLEN-1:0]	data_addr_i,
+	input   logic [XLEN-1:0]	data_wdata_i,
 	input	logic 				data_write_i,
 	input	logic				data_valid_i
 );

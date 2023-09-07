@@ -1,4 +1,4 @@
-module rv_top_testbench();
+module rv_top_testbench;
 import rv_pkg::*;
 
 logic [XLEN-1:0] tmp;

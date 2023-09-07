@@ -6,37 +6,45 @@
  * This file is a part of miriscv core.
  *
  ***********************************************************************************/
+import rv_pkg::XLEN;
+import rv_gpr_pkg::GPR_ADDR_W;
 
 module rv_gpr
 (
     // Clock, reset
-    input  logic                clk_i,
-    input  logic                arstn_i,
+    input  logic                    clk_i,
+    input  logic                    arstn_i,
 
     // Write port
-    input  logic                wr_en_i,
-    input  logic [XLEN-1:0]     wr_addr_i,
-    input  logic [XLEN-1:0]     wr_data_i,
+    input  logic                    wr_en_i,
+    input  logic [GPR_ADDR_W-1:0]   wr_addr_i,
+    input  logic [XLEN-1:0]         wr_data_i,
 
     // Read port 1
-    input  logic [4:0]          r1_addr_i,
-    output logic [XLEN-1:0]     r1_data_o,
+    input  logic [GPR_ADDR_W-1:0]   r1_addr_i,
+    output logic [XLEN-1:0]         r1_data_o,
 
     // Read port 2
-    input  logic [4:0]          r2_addr_i,
-    output logic [XLEN-1:0]     r2_data_o
+    input  logic [GPR_ADDR_W-1:0]   r2_addr_i,
+    output logic [XLEN-1:0]         r2_data_o
 );
+
+//localparam NUM_WORDS = 2**GPR_ADDR_W;
+//logic [XLEN-1:0] rf_reg [NUM_WORDS:0];
+//
+//always_ff @(posedge clk_i)
+//    if (wr_en_i) rf_reg[wr_addr_i] <= wr_data_i;
 
 
 //-----------------------------
 // Local declarations
 //-----------------------------
 
-localparam NUM_WORDS = 2**5;
+localparam NUM_WORDS = 2**GPR_ADDR_W;
 
 logic [NUM_WORDS-1:0][XLEN-1:0]   rf_reg;
 logic [NUM_WORDS-1:0][XLEN-1:0]   rf_reg_tmp_ff;
-logic [NUM_WORDS-1:0]         wr_en_dec;
+logic [NUM_WORDS-1:0]             wr_en_dec;
 
 
 //-----------------------------
@@ -77,5 +85,8 @@ endgenerate
 // GPR read
 assign r1_data_o = rf_reg[r1_addr_i];
 assign r2_data_o = rf_reg[r2_addr_i];
+
+//assign r1_data_o = (r1_addr_i) ? rf_reg[r1_addr_i] : '0;
+//assign r2_data_o = (r2_addr_i) ? rf_reg[r2_addr_i] : '0;
 
 endmodule

@@ -1,4 +1,11 @@
+db/
+incremental_db/
+output_files/
+transcript
 sim/*.out
 sim/*.vcd
+sim/sim/
 program/*.log
 program/*.v
+program/*.log
+program/*.o

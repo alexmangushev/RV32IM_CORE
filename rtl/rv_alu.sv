@@ -6,10 +6,10 @@
  * This file is a part of miriscv core.
  *
  ***********************************************************************************/
+import rv_pkg::*;
+import rv_alu_pkg::*;
 
 module rv_alu
-	import rv_pkg::*;
-	import rv_alu_pkg::*;
 (
   	input  logic [XLEN-1:0]     alu_port_a_i,    // ALU operation first operand
   	input  logic [XLEN-1:0]     alu_port_b_i,    // ALU operation second operand

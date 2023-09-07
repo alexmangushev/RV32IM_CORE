@@ -11,6 +11,7 @@ package  rv_pkg;
 
   parameter     XLEN       	= 32;   // Data width, either 32 or 64 bit
   parameter     ILEN       	= 32;   // Instruction width, 32 bit only
-  parameter		  MEM_LEN		= 18;	// Memory width, 18 bit minimum
+  parameter		MEM_LEN		= 18;	  // Memory width, 18 bit minimum
+  parameter bit RV32M       = 1;     // whether design support M-extension or not
 
 endpackage :  rv_pkg

@@ -1,5 +1,5 @@
+import rv_pkg::*;
 module rv_memory_unit
-	import rv_pkg::*;
 (
 	// Clock, reset
   	input  	logic            	clk_i,

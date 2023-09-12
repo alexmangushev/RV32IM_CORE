@@ -22,6 +22,10 @@ icarus: clean
 	vvp $(icarus_res_file) $(wave_file)
 	gtkwave -S gtkwave.tcl $(wave_file)
 
+modelsim: clean
+	make -C $(prj_path)/program
+	cmd.exe /c modelsim.bat
+
 clean: 
 	rm -rf $(icarus_res_file)
 	rm -rf $(wave_file)

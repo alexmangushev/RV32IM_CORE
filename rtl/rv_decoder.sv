@@ -227,7 +227,7 @@ module rv_decoder
       default: decode_mdu_operation_o = MDU_REMU;
     endcase
 
-    case({funct7[5],funct3,opcode})
+    case({funct7[5],funct3,opcode}) inside
       {1'b1,3'b000,S_OPCODE_OP}:      alu_op = ALU_SUB;
       {1'b?,3'b010,5'b0?100}:         alu_op = ALU_SLT;
       {1'b?,3'b011,5'b0?100}:         alu_op = ALU_SLTU;

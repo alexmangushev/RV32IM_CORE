@@ -36,6 +36,8 @@ module rv_decode_stage
   input  logic [XLEN-1:0]         m_gpr_wr_data_i,
   input  logic [GPR_ADDR_W-1:0]   m_gpr_wr_addr_i,
 
+  output logic [ILEN-1:0]         d_instr_o,
+  output logic [XLEN-1:0]         d_current_pc_o,
   output logic                    d_valid_o,
 
   output logic [XLEN-1:0]         d_op1_o,
@@ -135,6 +137,8 @@ module rv_decode_stage
   logic [XLEN-1:0]         d_target_pc;
   logic                    f_handshake;
 
+  logic [ILEN-1:0]         d_instr_ff;
+  logic [XLEN-1:0]         d_current_pc_ff;
   logic                    d_valid_ff;
 
   logic [XLEN-1:0]         d_op1_ff;
@@ -360,6 +364,12 @@ module rv_decode_stage
       d_valid_ff <= f_handshake;
   end
 
+  always_ff @(posedge clk_i) begin
+    if (~cu_stall_d_i) begin
+      d_instr_ff      <= f_instr_i;
+      d_current_pc_ff <= f_current_pc_i;
+    end
+  end
 
   always_ff @(posedge clk_i) begin
     if (f_handshake & ~cu_stall_d_i) begin
@@ -391,6 +401,8 @@ module rv_decode_stage
     end
   end
 
+  assign d_instr_o         = d_instr_ff;
+  assign d_current_pc_o    = d_current_pc_ff;
   assign d_valid_o         = d_valid_ff;
 
   assign d_op1_o           = d_op1_ff;

@@ -25,6 +25,8 @@ module rv_memory_stage
   input  logic                    cu_stall_m_i,
   output logic                    m_stall_req_o,
 
+  input  logic [ILEN-1:0]         e_instr_i,
+  input  logic [XLEN-1:0]         e_current_pc_i,
   input  logic                    e_valid_i,
 
   input  logic [XLEN-1:0]         e_alu_result_i,
@@ -48,6 +50,8 @@ module rv_memory_stage
   input  logic                    e_prediction_i,
   input  logic                    e_br_j_taken_i,
 
+  output logic [ILEN-1:0]         m_instr_o,
+  output logic [XLEN-1:0]         m_current_pc_o,
   output logic                    m_valid_o,
   output logic                    m_gpr_wr_en_o,
   output logic [GPR_ADDR_W-1:0]   m_gpr_wr_addr_o,
@@ -129,6 +133,8 @@ module rv_memory_stage
     endcase
   end
 
+  assign m_instr_o       = e_instr_i;
+  assign m_current_pc_o  = e_current_pc_i;
   assign m_valid_o       = e_valid_i;
   assign m_gpr_wr_en_o   = e_gpr_wr_en_i & e_valid_i & ~cu_stall_m_i;
   assign m_gpr_wr_addr_o = e_gpr_wr_addr_i;

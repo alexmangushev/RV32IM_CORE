@@ -39,10 +39,10 @@ module rv_core
   localparam m = 3'd3; // memory
   localparam w = 3'd4; // writeback
 
-  logic [XLEN-1:0]         current_pc      [f:f];
+  logic [XLEN-1:0]         current_pc      [f:m];
   logic [XLEN-1:0]         next_pc         [f:m];
 
-  logic [ILEN-1:0]         instr           [f:f];
+  logic [ILEN-1:0]         instr           [f:m];
   logic                    valid           [f:m];
 
   logic                    gpr_wr_en       [d:m];
@@ -174,6 +174,8 @@ module rv_core
     .m_gpr_wr_data_i     ( gpr_wr_data     [m] ),
     .m_gpr_wr_addr_i     ( gpr_wr_addr     [m] ),
 
+    .d_instr_o           ( instr           [d] ),
+    .d_current_pc_o      ( current_pc      [d] ),
     .d_valid_o           ( valid           [d] ),
 
     .d_op1_o             ( op1             [d] ),
@@ -222,6 +224,8 @@ module rv_core
     .cu_stall_e_i        ( cu_stall        [e] ),
     .e_stall_req_o       ( cu_stall_req    [e] ),
 
+    .d_instr_i           ( instr           [d] ),
+    .d_current_pc_i      ( current_pc      [d] ),
     .d_valid_i           ( valid           [d] ),
 
     .d_op1_i             ( op1             [d] ),
@@ -249,6 +253,8 @@ module rv_core
     .d_prediction_i      ( prediction      [d] ),
     .d_br_j_taken_i      ( br_j_taken      [d] ),
 
+    .e_instr_o           ( instr           [e] ),
+    .e_current_pc_o      ( current_pc      [e] ),
     .e_valid_o           ( valid           [e] ),
 
     .e_alu_result_o      ( alu_result      [e] ),
@@ -288,6 +294,8 @@ module rv_core
     .cu_stall_m_i        ( cu_stall        [m] ),
     .m_stall_req_o       ( cu_stall_req    [m] ),
 
+    .e_instr_i           ( instr           [e] ),
+    .e_current_pc_i      ( current_pc      [e] ),
     .e_valid_i           ( valid           [e] ),
 
     .e_alu_result_i      ( alu_result      [e] ),
@@ -311,6 +319,8 @@ module rv_core
     .e_prediction_i      ( prediction      [e] ),
     .e_br_j_taken_i      ( br_j_taken      [e] ),
 
+    .m_instr_o           ( instr           [m] ),
+    .m_current_pc_o      ( current_pc      [m] ),
     .m_valid_o           ( valid           [m] ),
     .m_gpr_wr_en_o       ( gpr_wr_en       [m] ),
     .m_gpr_wr_addr_o     ( gpr_wr_addr     [m] ),

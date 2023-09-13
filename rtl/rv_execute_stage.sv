@@ -26,6 +26,8 @@ module rv_execute_stage
   output logic                    e_stall_req_o,
 
   // From Decode
+  input  logic [ILEN-1:0]         d_instr_i,
+  input  logic [XLEN-1:0]         d_current_pc_i,
   input  logic                    d_valid_i,
 
   input  logic [XLEN-1:0]         d_op1_i,
@@ -53,6 +55,8 @@ module rv_execute_stage
   input  logic                    d_prediction_i,
   input  logic                    d_br_j_taken_i,
 
+  output logic [ILEN-1:0]         e_instr_o,
+  output logic [XLEN-1:0]         e_current_pc_o,
   output logic                    e_valid_o,
   output logic [XLEN-1:0]         e_alu_result_o,
   output logic [XLEN-1:0]         e_mdu_result_o,
@@ -89,6 +93,8 @@ module rv_execute_stage
   logic                    mdu_stall_req;
   logic                    mdu_req;
 
+  logic [ILEN-1:0]         e_instr_ff;
+  logic [XLEN-1:0]         e_current_pc_ff;
   logic                    e_valid_ff;
 
   logic [XLEN-1:0]         e_alu_result_ff;
@@ -158,6 +164,13 @@ module rv_execute_stage
       e_valid_ff <= d_valid_i;
   end
 
+    always_ff @(posedge clk_i) begin
+    if (~cu_stall_e_i) begin
+      e_instr_ff      <= d_instr_i;
+      e_current_pc_ff <= d_current_pc_i;
+    end
+  end
+
 
   always_ff @(posedge clk_i) begin
     if (d_valid_i & ~cu_stall_e_i) begin
@@ -185,6 +198,8 @@ module rv_execute_stage
     end
   end
 
+  assign e_instr_o       = e_instr_ff;
+  assign e_current_pc_o  = e_current_pc_ff;
   assign e_valid_o       = e_valid_ff;
 
   assign e_alu_result_o  = e_alu_result_ff;

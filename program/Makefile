@@ -9,7 +9,8 @@ all: clean
 # save program for verilog
 	riscv32-unknown-elf-objcopy -O verilog --verilog-data-width 4 main.o mem.v
 # call spike
-	spike -l --log=$(spike_log) pk main.o
+#	spike -l --log=$(spike_log) pk main.o
+	./getlogspike.sh
 
 clean:
 	rm -rf $(asm_log)

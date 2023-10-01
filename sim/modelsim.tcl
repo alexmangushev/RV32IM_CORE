@@ -12,14 +12,14 @@ vlog $inc $src $tb
 vsim work.rv_core_testbench
 
 add wave -color orange -hex -group tb /rv_core_testbench/*
-add wave -hex -group top /rv_core_testbench/dut/*
-add wave -hex -group fetch /rv_core_testbench/dut/i_fetch_stage/*
-add wave -hex -group fetch /rv_core_testbench/dut/i_fetch_stage/i_fetch_unit/*
-add wave -hex -group decode /rv_core_testbench/dut/i_decode_stage/*
-add wave -hex -group decode /rv_core_testbench/dut/i_decode_stage/i_gpr/rf_reg
-add wave -hex -group execute /rv_core_testbench/dut/i_execute_stage/*
-add wave -hex -group memory /rv_core_testbench/dut/i_memory_stage/*
-add wave -hex -group control_unit /rv_core_testbench/dut/i_control_unit/*
+add wave -hex -group top /rv_core_testbench/dut/core/*
+add wave -hex -group fetch /rv_core_testbench/dut/core/i_fetch_stage/*
+add wave -hex -group fetch /rv_core_testbench/dut/core/i_fetch_stage/i_fetch_unit/*
+add wave -hex -group decode /rv_core_testbench/dut/core/i_decode_stage/*
+add wave -hex -group decode /rv_core_testbench/dut/core/i_decode_stage/i_gpr/rf_reg
+add wave -hex -group execute /rv_core_testbench/dut/core/i_execute_stage/*
+add wave -hex -group memory /rv_core_testbench/dut/core/i_memory_stage/*
+add wave -hex -group control_unit /rv_core_testbench/dut/core/i_control_unit/*
 
 
 #set all_signals [find signals -ports -internal * -recursive]
@@ -28,8 +28,8 @@ add wave -hex -group control_unit /rv_core_testbench/dut/i_control_unit/*
 #    puts $i
 #}
 
-#add wave -recursive /rv_core_testbench/dut/*
-#add wave /rv_core_testbench/dut/*
+#add wave -recursive /rv_core_testbench/dut/core/*
+#add wave /rv_core_testbench/dut/core/*
 # add wave -recursive *
 
 # run the simulation

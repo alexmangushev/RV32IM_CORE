@@ -5,7 +5,7 @@ def debug_show(result_file, show_str):
     result_file.write(show_str)
 
 spike_log_file = open("../program/spike.log", "r")
-modelsim_log_file = open("sim/dut.log", "r")
+modelsim_log_file = open("sim/dut.core.log", "r")
 
 result_file = open("result.log", "w")
 

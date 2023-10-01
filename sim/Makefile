@@ -24,6 +24,7 @@ icarus: clean
 
 modelsim: clean
 	make -C $(prj_path)/program
+#	./modelsim.sh
 	cmd.exe /c modelsim.bat
 	python3 compare.py
 

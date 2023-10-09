@@ -25,6 +25,14 @@ logic [XLEN-1:0]   data_addr;
 logic [XLEN-1:0]   data_wdata;
 
 
+logic              data_rvalid_ram;
+logic [XLEN-1:0]   data_rdata_ram;
+logic              data_req_ram;
+logic              data_we_ram;
+logic [XLEN/8-1:0] data_be_ram;
+logic [XLEN-1:0]   data_addr_ram;
+logic [XLEN-1:0]   data_wdata_ram;
+
 rv_core core
 (
     .clk_i               ( clk_i             ),
@@ -45,6 +53,37 @@ rv_core core
     .data_wdata_o        ( data_wdata        )
 );
 
+
+rv_mmu mmu
+(
+  // Data memory interface in
+  .data_rvalid_o        ( data_rvalid       ),
+  .data_rdata_o         ( data_rdata        ),
+  .data_req_i           ( data_req          ),
+  .data_we_i            ( data_we           ),
+  .data_be_i            ( data_be           ),
+  .data_addr_i          ( data_addr         ),
+  .data_wdata_i         ( data_wdata        ),
+
+  // Data memory interface out
+  .data_rvalid_hex_i    ( ),
+  .data_rdata_hex_i     ( ),
+
+  .data_rvalid_sram_i   ( data_rvalid_ram     ),
+  .data_rdata_sram_i    ( data_rdata_ram      ),
+
+  .data_rvalid_key_i    ( ),
+  .data_rdata_key_i     ( ),
+
+  .data_req_sram_o      ( data_req_ram        ),
+  .data_req_o           (                     ),
+  .data_we_o            ( data_we_ram         ),
+  .data_be_o            ( data_be_ram         ),
+  .data_addr_o          ( data_addr_ram       ),
+  .data_wdata_o         ( data_wdata_ram      )
+);
+
+
 rv_rom rom
 (
     .clk_i               ( clk_i             ),
@@ -61,13 +100,13 @@ rv_ram ram
     .clk_i               ( clk_i             ),
     .arstn_i             ( arstn_i           ),
     
-    .data_rvalid_o       ( data_rvalid       ),   
-    .data_rdata_o        ( data_rdata        ),   
-    .data_req_i          ( data_req          ),
-    .data_we_i           ( data_we           ),
-    .data_be_i           ( data_be           ),
-    .data_addr_i         ( data_addr         ),   
-    .data_wdata_i        ( data_wdata        )
+    .data_rvalid_o       ( data_rvalid_ram   ),   
+    .data_rdata_o        ( data_rdata_ram    ),   
+    .data_req_i          ( data_req_ram      ),
+    .data_we_i           ( data_we_ram       ),
+    .data_be_i           ( data_be_ram       ),
+    .data_addr_i         ( data_addr_ram     ),   
+    .data_wdata_i        ( data_wdata_ram    )
 );
 
 endmodule

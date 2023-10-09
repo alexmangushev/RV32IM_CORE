@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 log_file -noappend spike.log
 set timeout 2
-spawn spike -d pk main.o
+spawn spike -d pk main
 expect "(spike)"
 send "until pc 0 0x000100dc\r\n"
 

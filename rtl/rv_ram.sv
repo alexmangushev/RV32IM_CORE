@@ -27,11 +27,7 @@ logic [XLEN-1:0]    data_mem 	[0:2 ** MEM_LEN-1];
 logic [latency-1:0] data_rvalid_delay;
 logic [XLEN-1:0]    data_addr;
 
-always_comb
-if ((data_addr_i >> 2) >= ADDRESS_GATE)
-            data_addr = (data_addr_i - ADDRESS_DEC_GE) >> 2;
-        else 
-            data_addr = (data_addr_i - ADDRESS_DEC_LT) >> 2;
+assign data_addr = data_addr_i >> 2;
 
 // read
 always_ff @(posedge clk_i or negedge arstn_i)
@@ -62,9 +58,10 @@ always_ff @(posedge clk_i) begin
         data_mem [data_addr] [31:24] <= data_wdata_i[31:24];
 end
 
-initial
+initial begin
     $readmemh("C:/Users/alexandr/Desktop/ubuntu/RV32IM_CORE/program/mem.v", data_mem);
+    data_mem [262140] = 'b1;
     //$readmemh("/mnt/c/Users/alexandr/Desktop/ubuntu/RV32IM_CORE/program/mem.v", data_mem);
-
+end
 
 endmodule

@@ -21,9 +21,9 @@ int main()
         num_2 = num_1;
         num_1 = num;
 
-        //*hex_ptr = num;
+        *hex_ptr = num;
 
-        //while (*key_ptr != 1);
+        while (*key_ptr != 1);
 
     }
     return 0;

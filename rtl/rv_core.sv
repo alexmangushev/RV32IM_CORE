@@ -85,37 +85,6 @@ module rv_core
   logic                    cu_rs2_req      [f:f];
 
 
-  ////////////////////////////////////////////////////
-  //
-  ///////////////////////////////////////////////////
-
-  //logic [XLEN-1:0] instr_mem 	[0:2 ** MEM_LEN-1];
-  //logic [XLEN-1:0]  pc;
-
-
-  //initial begin
-  //  cu_kill[0] = '0;
-  //  cu_kill[1] = '0;
-  //  cu_kill[2] = '0;
-  //  cu_kill[3] = '0;
-  //  cu_stall[0] = '0;
-  //  cu_stall[1] = '0;
-  //  cu_stall[2] = '0;
-  //  cu_stall[3] = '0;
-  //  
-  //  $readmemh("C:/Users/alexandr/Desktop/ubuntu/RV32IM_CORE/program/mem.v", instr_mem);
-  //end
-
-  //always_ff @(posedge clk_i or negedge arstn_i)
-  //if (!arstn_i)
-  //  pc <= boot_addr_i;
-  //else
-  //  pc += 4;
-//
-  //assign instr[f] = instr_mem[pc >> 2];
-  //assign valid[0] = '1;
-
-
   // write_back_mux
   // 2 - memory
   // 1 - mdu

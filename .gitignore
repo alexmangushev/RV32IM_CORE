@@ -9,3 +9,4 @@ program/*.log
 program/*.v
 program/*.log
 program/*.o
+*.bak

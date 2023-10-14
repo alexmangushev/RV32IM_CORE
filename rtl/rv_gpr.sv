@@ -68,7 +68,10 @@ for (i = 1; i < NUM_WORDS; i++) begin : rf_gen
 
     always_ff @(posedge clk_i or negedge arstn_i) begin : register_write_behavioral
     if (arstn_i==1'b0) begin
-        rf_reg_tmp_ff[i] <= 'b0;
+        if (i == 'd2)
+            rf_reg_tmp_ff[i] <= 'h7ffffda0;
+        else
+            rf_reg_tmp_ff[i] <= 'b0;
     end else begin
         if (wr_en_dec[i])
         rf_reg_tmp_ff[i] <= wr_data_i;

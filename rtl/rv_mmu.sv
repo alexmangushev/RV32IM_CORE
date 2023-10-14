@@ -43,6 +43,8 @@ always_comb
     else if (data_addr_i < ADDRESS_GATE) begin
         data_addr_o = data_addr_i - ADDRESS_DEC_LT;
     end
+	else
+		data_addr_o = data_addr_i;
 
 // rvalid and rdata
 always_comb

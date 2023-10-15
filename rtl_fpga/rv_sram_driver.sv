@@ -61,7 +61,7 @@ state_t state, next_state;
 // prepare_u == 1, select memory and write upper part of data
 logic    prepare_u; 
 // prepare_u == 0, set address, prepare_u == 1, read lower values into register
-logic     prepare_l;
+logic    prepare_l;
 
 
 // Choose next state logic
@@ -180,17 +180,18 @@ always_ff @(posedge clk_i or negedge arstn_i)
     end
     FSM_READ_U: begin
 
-            sram_ce_n                   <= '0;
-            sram_oe_n                   <= '0;
-            sram_we_n                   <= '1;
-            sram_ub_n                   <= '0;
-            sram_lb_n                   <= '0;
+        sram_ce_n                   <= '0;
+        sram_oe_n                   <= '0;
+        sram_we_n                   <= '1;
+        sram_ub_n                   <= '0;
+        sram_lb_n                   <= '0;
 
-            sram_addr                   <= (data_addr_i >> 1) + 1'b1;
-            data_rdata_o[XLEN-1:XLEN/2] <= sram_data_i;
-            data_rvalid_o               <= '1;
+        sram_addr                   <= (data_addr_i >> 1) + 1'b1;
+        data_rdata_o[XLEN-1:XLEN/2] <= sram_data_i;
+        if (prepare_u)
+            data_rvalid_o           <= '1;
 
-            prepare_u                   <= '1;
+        prepare_u                   <= '1;
     end
     endcase
 

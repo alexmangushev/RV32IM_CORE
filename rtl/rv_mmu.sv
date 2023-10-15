@@ -43,8 +43,8 @@ always_comb
     else if (data_addr_i < ADDRESS_GATE) begin
         data_addr_o = data_addr_i - ADDRESS_DEC_LT;
     end
-	else
-		data_addr_o = data_addr_i;
+    else
+        data_addr_o = data_addr_i;
 
 // rvalid and rdata
 always_comb
@@ -52,6 +52,10 @@ always_comb
     data_rvalid_o   = data_rvalid_hex_i;
     data_rdata_o    = data_rdata_hex_i;
   end
+  else if (data_addr_o == ADDRESS_KEY) begin
+    data_rvalid_o   = data_rvalid_key_i;
+    data_rdata_o    = data_rdata_key_i;
+  end 
   else begin
     data_rvalid_o   = data_rvalid_sram_i;
     data_rdata_o    = data_rdata_sram_i;

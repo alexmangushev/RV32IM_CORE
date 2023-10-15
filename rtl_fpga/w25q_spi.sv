@@ -100,7 +100,7 @@ case (state)
         else
             next_state = FSM_IDLE;
     FSM_READ:
-        if (spi_ready)
+        if (spi_ready || !instr_req_i)
             next_state = FSM_IDLE;
         else
             next_state = FSM_READ;

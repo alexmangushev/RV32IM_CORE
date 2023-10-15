@@ -10,3 +10,4 @@ program/*.v
 program/*.log
 program/*.o
 *.bak
+*.log

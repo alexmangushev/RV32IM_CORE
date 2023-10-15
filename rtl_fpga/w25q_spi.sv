@@ -37,7 +37,7 @@ logic    [COUNTER_WIDTH - 1:0]    spi_clk_counter;    // counter for clk
 
 // SPI Receive-transmitt
 // And spi_ready signal
-always_ff @(negedge spi_sck or posedge spi_init)
+always_ff @(posedge clk_i or posedge spi_init)
     if (spi_init) begin
         spi_ready       <= '0;
         spi_counter     <= '0;
@@ -50,7 +50,7 @@ always_ff @(negedge spi_sck or posedge spi_init)
             spi_buffer <= {8'h0B, instr_addr_i[23:0], {5{8'h00}}};
 
     end
-    else begin
+    else if (spi_sck && !spi_clk_counter) begin // posedge of spi_sck
         // receive/transmitt and count bits
         {spi_mosi, spi_buffer}     <= {spi_buffer, spi_miso};
         spi_counter                <= spi_counter + 'd1;
@@ -80,8 +80,8 @@ always_ff @(posedge clk_i or negedge arstn_i)
     end
     else begin
         spi_sck            <= '0;        
-        spi_clk_counter <= '0;
-        spi_cs            <= '1;
+        spi_clk_counter    <= '0;
+        spi_cs             <= '1;
     end
             
 // Choose next state logic

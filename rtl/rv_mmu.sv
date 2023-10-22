@@ -20,6 +20,9 @@ module rv_mmu
 
   input   logic              data_rvalid_key_i,
   input   logic [XLEN-1:0]   data_rdata_key_i,
+  
+  input   logic              data_rvalid_uart_i,
+  input   logic [XLEN-1:0]   data_rdata_uart_i,
 
   output  logic              data_req_sram_o,  
   output  logic              data_req_o,
@@ -56,6 +59,10 @@ always_comb
     data_rvalid_o   = data_rvalid_key_i;
     data_rdata_o    = data_rdata_key_i;
   end 
+  else if (data_addr_o == ADDRESS_UART) begin
+    data_rvalid_o   = data_rvalid_uart_i;
+    data_rdata_o    = data_rdata_uart_i;
+  end
   else begin
     data_rvalid_o   = data_rvalid_sram_i;
     data_rdata_o    = data_rdata_sram_i;

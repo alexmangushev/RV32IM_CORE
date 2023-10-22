@@ -29,7 +29,11 @@ module rv_fpga_soc
     output  logic [55:0]        hex,
 
     // Key
-    input   logic               key
+    input   logic               key,
+
+    // Uart
+    input   logic               uart_rx,
+    output  logic               uart_tx
 
 );
 
@@ -59,6 +63,7 @@ logic [XLEN-1:0]   data_wdata_ram;
 
 logic              data_rvalid_hex;
 logic              data_rvalid_key;
+logic              data_rvalid_uart;
 logic [XLEN-1:0]   data_rdata_key;
 
 logic              data_req_per;
@@ -98,6 +103,9 @@ rv_mmu mmu
   // Data memory interface out
   .data_rvalid_hex_i        ( data_rvalid_hex     ),
   .data_rdata_hex_i         (   ),
+
+  .data_rvalid_uart_i       ( data_rvalid_uart     ),
+  .data_rdata_uart_i        (   ),
 
   .data_rvalid_sram_i       ( data_rvalid_ram     ),
   .data_rdata_sram_i        ( data_rdata_ram      ),
@@ -162,6 +170,23 @@ rv_seven_digit_device rv_seven_digit_device
     .data_wdata_i           ( data_wdata_ram    ),
 
     .hex                    ( hex               )
+);
+
+rv_uart_driver rv_uart_driver
+(
+    .clk_i                  ( clk_i             ),
+    .arstn_i                ( arstn_i           ),
+    
+    .data_rvalid_o          ( data_rvalid_uart  ),   
+    .data_rdata_o           (                   ),   
+    .data_req_i             ( data_req_per      ),
+    .data_we_i              ( data_we_ram       ),
+    .data_be_i              ( data_be_ram       ),
+    .data_addr_i            ( data_addr_ram     ),   
+    .data_wdata_i           ( data_wdata_ram    ),
+
+    .uart_rx                ( uart_rx           ),
+    .uart_tx                ( uart_tx           )
 );
 
 rv_sram_driver sram

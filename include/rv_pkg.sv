@@ -19,5 +19,6 @@ package  rv_pkg;
   parameter     ADDRESS_PER     = 32'h8000_0000;  // Start my peripheral
   parameter     ADDRESS_HEX     = 32'h8000_0004;  // HEX indicator
   parameter     ADDRESS_KEY     = 32'h8000_0008;  // KEY button
+  parameter     ADDRESS_UART    = 32'h8000_000C;  // UART
 
 endpackage :  rv_pkg

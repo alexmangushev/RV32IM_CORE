@@ -21,7 +21,13 @@ module rv_fpga_top
     output  logic           SRAM_OE_N,
     output  logic           SRAM_WE_N,
     output  logic           SRAM_UB_N,
-    output  logic           SRAM_LB_N
+    output  logic           SRAM_LB_N,
+
+    input   logic           UART_RXD,
+    output  logic           UART_TXD,
+
+    output  logic           UART_CTS
+
 );
 
 // Indicator
@@ -60,10 +66,12 @@ assign spi_miso         = GPIO[3];
 
 assign key              = KEY[1];
 
+assign GPIO[4] = UART_TXD;
+
 pll pll 
 (
     .inclk0 (CLOCK_50),
-    .c0     (clk_pll),
+    .c0     (clk_pll)
 );
 
 global pll_clk
@@ -97,7 +105,10 @@ rv_fpga_soc soc
 
     .hex                ( hex           ),
 
-    .key                ( key           )
+    .key                ( key           ),
+
+    .uart_rx            ( UART_RXD      ),
+    .uart_tx            ( UART_TXD      )
 
 );
 

@@ -22,7 +22,8 @@ module rv_seven_digit_device
 logic [XLEN-1:0] data_ff;
 logic            data_ff_en;
 
-assign data_ff_en = (data_addr_i == ADDRESS_HEX && data_we_i);
+assign data_ff_wr= (data_addr_i == ADDRESS_HEX && data_we_i);
+assign data_ff_rd = (data_addr_i == ADDRESS_HEX && !data_we_i);
 
 genvar i;
 generate
@@ -41,9 +42,13 @@ always_ff @(posedge clk_i or negedge arstn_i)
         data_rdata_o    <= '0;
         data_ff         <= '0;
     end
-    else if (data_ff_en) begin
+    else if (data_ff_wr) begin
         data_rvalid_o   <= '1;
         data_ff         <= data_wdata_i;
+    end
+    else if (data_ff_rd) begin
+        data_rvalid_o   <= '1;
+        data_rdata_o    <= data_ff;
     end
 
 endmodule

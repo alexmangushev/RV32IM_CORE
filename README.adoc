@@ -25,6 +25,10 @@ include::./doc/project_state.adoc[leveloffset=+2]
 
 include::./doc/prepare_env.adoc[leveloffset=+2]
 
-== Запуск ядра
+== Запуск ядра в симуляторе
+
+include::./doc/kernel_start_sim.adoc[leveloffset=+2]
+
+== Запуск ядра на FPGA
 
 == Устройство проекта

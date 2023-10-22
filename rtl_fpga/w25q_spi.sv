@@ -19,39 +19,49 @@ module w25q_spi
     output  logic               spi_mosi,
     input   logic               spi_miso,
     output  logic               spi_sck,
-    output  logic               spi_cs,
-
-    // Finish initialization memory
-    output  logic               memory_init_finish
+    output  logic               spi_cs
 );
+
+// Finish initialization memory
+logic memory_init_finish;
 
 typedef enum {FSM_INIT, FSM_IDLE, FSM_READ } state_t;
 state_t state, next_state;
 
-logic                             spi_ready;             // set to 1 when spi transaction finish
-logic                             spi_init;             // set to 1 when spi initialization finish
-logic    [71:0]                   spi_buffer;            // buffer for sending data
-logic    [6:0]                    spi_counter;        // counter for sending bit
+logic                             spi_ready;          // set to 1 when spi transaction finish
+logic                             spi_init;           // set to 1 when spi initialization finish
+logic    [71:0]                   spi_buffer;         // buffer for receive/transmit data
+logic    [6:0]                    spi_counter;        // counter for receive/transmit bit
 logic    [COUNTER_WIDTH - 1:0]    spi_clk_counter;    // counter for clk
 
 
-// SPI Receive-transmitt
+// SPI Receive-transmit
 // And spi_ready signal
-always_ff @(posedge clk_i or posedge spi_init)
-    if (spi_init) begin
+always_ff @(posedge clk_i or negedge arstn_i)
+    if (!arstn_i) begin
         spi_ready       <= '0;
         spi_counter     <= '0;
 
-        // Different initialization for send buffer
-        if (state == FSM_INIT)
+        spi_buffer      <= '0;
+        spi_mosi        <= '0;
+
+    end 
+    else if (spi_init) begin
+        spi_ready       <= '0;
+        spi_counter     <= '0;
+
+        // Different initialization for receive/transmit buffer
+        if (state == FSM_INIT) begin
             spi_buffer <= {8'h9F, {3{8'hA5}}, {5{8'h00}}};
-
-        else if (state == FSM_READ)
+            spi_mosi   <= 1'b1;
+        end
+        else begin
             spi_buffer <= {8'h0B, instr_addr_i[23:0], {5{8'h00}}};
-
+            spi_mosi   <= 1'b0;
+        end
     end
-    else if (spi_sck && !spi_clk_counter) begin // posedge of spi_sck
-        // receive/transmitt and count bits
+    else if (spi_sck && !spi_clk_counter && state != FSM_IDLE) begin // posedge of spi_sck
+        // receive/transmit and count bits
         {spi_mosi, spi_buffer}     <= {spi_buffer, spi_miso};
         spi_counter                <= spi_counter + 'd1;
 
@@ -70,7 +80,7 @@ always_ff @(posedge clk_i or negedge arstn_i)
         spi_cs            <= '1;
     end 
     else if (state != FSM_IDLE) begin
-        if (!spi_clk_counter)
+        if (!spi_clk_counter && !spi_init) // invert spi_clk
             spi_sck <= !spi_sck;
 
         spi_clk_counter <= spi_clk_counter + 'd1;
@@ -79,7 +89,7 @@ always_ff @(posedge clk_i or negedge arstn_i)
             spi_cs <= '0; //After first initialization cycle start change spi_cs
     end
     else begin
-        spi_sck            <= '0;        
+        spi_sck            <= '1;        
         spi_clk_counter    <= '0;
         spi_cs             <= '1;
     end
@@ -100,7 +110,7 @@ case (state)
         else
             next_state = FSM_IDLE;
     FSM_READ:
-        if (spi_ready || !instr_req_i)
+        if (spi_ready && !spi_init || !instr_req_i)
             next_state = FSM_IDLE;
         else
             next_state = FSM_READ;
@@ -138,7 +148,7 @@ always_ff @(posedge clk_i or negedge arstn_i)
     FSM_READ: begin
         spi_init        <= '0;
 
-        if (spi_ready && memory_init_finish) begin
+        if (spi_ready && memory_init_finish && !spi_init) begin
             instr_rvalid_o   <= '1;
             instr_rdata_o    <= spi_buffer[31:0];
         end

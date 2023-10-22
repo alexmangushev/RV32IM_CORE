@@ -31,4 +31,7 @@ include::./doc/kernel_start_sim.adoc[leveloffset=+2]
 
 == Запуск ядра на FPGA
 
+include::./doc/kernel_fpga_start.adoc[leveloffset=+2]
+
+
 == Устройство проекта

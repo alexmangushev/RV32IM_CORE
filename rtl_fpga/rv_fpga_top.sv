@@ -68,15 +68,10 @@ assign key              = KEY[1];
 
 assign GPIO[4] = UART_TXD;
 
-pll pll 
-(
-    .inclk0 (CLOCK_50),
-    .c0     (clk_pll)
-);
 
 global pll_clk
 (
-    .in  (clk_pll),
+    .in  (CLOCK_50),
     .out (clk)
 );
 

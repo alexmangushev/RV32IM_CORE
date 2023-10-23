@@ -5,6 +5,7 @@ transcript
 sim/*.out
 sim/*.vcd
 sim/sim/
+simulation/
 program/*.log
 program/*.v
 program/*.log

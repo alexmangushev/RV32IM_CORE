@@ -2,7 +2,7 @@ import rv_pkg::*;
 
 module rv_uart_driver
 #(
-    parameter clk_i_freq        = 25_000_000,
+    parameter clk_i_freq        = 50_000_000,
     parameter uart_baud_rate    = 9600
 )
 (
